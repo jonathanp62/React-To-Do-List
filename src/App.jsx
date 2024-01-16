@@ -30,8 +30,8 @@ import {NewToDoForm} from "./NewToDoForm.jsx";
 import './styles.css';
 
 export default function App() {
-    function addTodo(title) {
-        console.log(title);
+    function addTodo(newToDoItem) {
+        console.log(newToDoItem);
         // setTodos(currentTodos => {
         //     return [
         //         ...currentTodos,
@@ -42,7 +42,7 @@ export default function App() {
 
     return (
         <>
-            <NewToDoForm onSubmit={addTodo}/>
+            <NewToDoForm onSubmit={addTodo} />
             <Header />
         </>
     );
