@@ -22,28 +22,42 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */}
 
-import {useEffect, useState} from 'react';
+import {useState} from "react";
 
-import {Header} from "./Header.jsx";
-import {NewToDoForm} from "./NewToDoForm.jsx";
+import PropTypes from 'prop-types';
 
-import './styles.css';
+export function NewToDoForm({onSubmit}) {
+    const [newToDoItem, setNewToDoItem] = useState("");
 
-export default function App() {
-    function addTodo(title) {
-        console.log(title);
-        // setTodos(currentTodos => {
-        //     return [
-        //         ...currentTodos,
-        //         { id: crypto.randomUUID(), title, completed: false },
-        //     ]
-        // })
+    function handleSubmit(e) {
+        e.preventDefault();     // Prevents immediate submission; allows for validation
+
+        if (newToDoItem === "")
+            return;
+
+        onSubmit(newToDoItem);  // Passed by the App component
+
+        setNewToDoItem("");
     }
 
+    // The onChange listener invokes the lambda with a ChangeEvent<HTMLInputElement>
+
     return (
-        <>
-            <NewToDoForm onSubmit={addTodo}/>
-            <Header />
-        </>
-    );
+        <form className="new-item-form" onSubmit={handleSubmit}>
+            <div className="form-row">
+                <label htmlFor="item">New To-Do Item</label>
+                <input
+                    value={newToDoItem}
+                    onChange={e => setNewToDoItem(e.target.value)}
+                    type="text"
+                    id="item"
+                />
+            </div>
+            <button className="btn">Add New To-Do Item</button>
+        </form>
+    )
 }
+
+NewToDoForm.propTypes = {
+    onSubmit: PropTypes.func.isRequired,
+};
