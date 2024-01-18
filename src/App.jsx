@@ -30,14 +30,30 @@ import {NewToDoForm} from "./NewToDoForm.jsx";
 import './styles.css';
 
 export default function App() {
+    const [todos, setTodos] = useState(() => {
+        const localValue = localStorage.getItem("TODOS");
+
+        if (localValue == null)
+            return [];
+
+        return JSON.parse(localValue);
+    });
+
+    // Executed after the component is rendered
+
+    useEffect(() => {
+        localStorage.setItem("TODOS", JSON.stringify(todos));
+    });
+
     function addTodo(newToDoItem) {
-        console.log(newToDoItem);
-        // setTodos(currentTodos => {
-        //     return [
-        //         ...currentTodos,
-        //         { id: crypto.randomUUID(), title, completed: false },
-        //     ]
-        // })
+        setTodos(currentTodos => {
+            // Return the current list with a new todo added
+
+            return [
+                ...currentTodos,    // Destructure into distinct variables
+                { id: crypto.randomUUID(), newToDoItem, completed: false },
+            ];
+        });
     }
 
     return (
