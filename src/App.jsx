@@ -24,9 +24,12 @@ SOFTWARE.
 
 import {useEffect, useState} from 'react';
 
+import {Footer} from "./Footer.jsx";
 import {Header} from "./Header.jsx";
 import {NewToDoForm} from "./NewToDoForm.jsx";
 import {TodoList} from "./ToDoList.jsx";
+
+import packageJson from "../package.json";
 
 import './styles.css';
 
@@ -86,6 +89,7 @@ export default function App() {
                 toggleToDoCompleted={toggleToDoCompleted}
                 deleteToDo={deleteToDoItem}
             />
+            <Footer version={packageJson.version} />
         </>
     );
 }
