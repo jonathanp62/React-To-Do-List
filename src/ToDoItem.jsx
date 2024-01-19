@@ -22,10 +22,33 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */}
 
-export function Header() {
+import PropTypes from 'prop-types';
+
+export function ToDoItem({id, newToDoItem, completed, toggleToDoCompleted, deleteToDo}) {
     return (
-        <div>
-            <h1>To-Do Items</h1>
-        </div>
-    );
+        <li>
+            <label>
+                <input
+                    type="checkbox"
+                    checked={completed}
+                    onChange={e => toggleToDoCompleted(id, e.target.checked)}
+                />
+                {newToDoItem}
+            </label>
+            <button
+                onClick={() => deleteToDo(id)}
+                className="btn btn-danger"
+            >
+            Delete
+            </button>
+        </li>
+    )
 }
+
+ToDoItem.propTypes = {
+    id: PropTypes.string.isRequired,
+    newToDoItem: PropTypes.string.isRequired,
+    completed: PropTypes.bool.isRequired,
+    toggleToDoCompleted: PropTypes.func.isRequired,
+    deleteToDo: PropTypes.func.isRequired,
+};

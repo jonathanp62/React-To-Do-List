@@ -30,6 +30,8 @@ export function NewToDoForm({onSubmit}) {
     const [newToDoItem, setNewToDoItem] = useState("");
 
     function handleSubmit(e) {
+        // Parameter 'e' represents a SubmitEvent
+
         e.preventDefault();     // Prevents immediate submission; allows for validation
 
         if (newToDoItem === "")

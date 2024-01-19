@@ -22,10 +22,31 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */}
 
-export function Header() {
+import PropTypes from 'prop-types';
+
+import {ToDoItem} from "./ToDoItem.jsx";
+
+export function TodoList({todos, toggleToDoCompleted, deleteToDo}) {
     return (
-        <div>
-            <h1>To-Do Items</h1>
-        </div>
+        <ul className="list">
+            {todos.length === 0 && "No To-Do Items"}
+
+            {todos.map(todo => {
+                return (
+                    <ToDoItem
+                        {...todo}
+                        key={todo.id}
+                        toggleToDoCompleted={toggleToDoCompleted}
+                        deleteToDo={deleteToDo}
+                    />
+                );
+            })}
+        </ul>
     );
 }
+
+TodoList.propTypes = {
+    todos: PropTypes.array.isRequired,
+    toggleToDoCompleted: PropTypes.func.isRequired,
+    deleteToDo: PropTypes.func.isRequired,
+};

@@ -26,6 +26,7 @@ import {useEffect, useState} from 'react';
 
 import {Header} from "./Header.jsx";
 import {NewToDoForm} from "./NewToDoForm.jsx";
+import {TodoList} from "./ToDoList.jsx";
 
 import './styles.css';
 
@@ -45,7 +46,7 @@ export default function App() {
         localStorage.setItem("TODOS", JSON.stringify(todos));
     });
 
-    function addTodo(newToDoItem) {
+    function addToDoItem(newToDoItem) {
         setTodos(currentTodos => {
             // Return the current list with a new todo added
 
@@ -56,10 +57,35 @@ export default function App() {
         });
     }
 
+    function deleteToDoItem(id) {
+        setTodos(currentTodos => {
+            // The filter keeps items that do not match the id
+
+            return currentTodos.filter(todo => todo.id !== id)
+        });
+    }
+
+    function toggleToDoCompleted(id, completed) {
+        setTodos(currentTodos => {
+            return currentTodos.map(todo => {
+                if (todo.id === id) {
+                    return { ...todo, completed }
+                }
+
+                return todo
+            })
+        })
+    }
+
     return (
         <>
-            <NewToDoForm onSubmit={addTodo} />
+            <NewToDoForm onSubmit={addToDoItem} />
             <Header />
+            <TodoList
+                todos={todos}
+                toggleToDoCompleted={toggleToDoCompleted}
+                deleteToDo={deleteToDoItem}
+            />
         </>
     );
 }
